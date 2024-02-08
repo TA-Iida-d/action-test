@@ -15,6 +15,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Create staging branch
+        run: git checkout staging 2>/dev/null || git branch -b staging develop && git push -u origin/staging
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
