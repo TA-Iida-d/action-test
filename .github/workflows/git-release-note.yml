@@ -1,0 +1,38 @@
+on:
+  pull_request:
+    branches:
+      - main
+    types: [closed]
+
+jobs:
+  git-release-note:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get Version From package.json
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+
+      - name: Create Change Log
+        env:
+          GITHUB_AUTH: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Get PrevTag From git
+          PREV_TAG=$(git describe -abbrev=0)
+          LATEST_TAG=v${{ steps.package-version.outputs.current-version }}
+
+          npx lerna-changelog -from=$PREV_TAG > ./RELEASE_NOTE$LATEST_TAG.md
+          cat ./RELEASE_NOTE$LATEST_TAG.md
+
+      - name: Create Release note
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release ${{ steps.package-version.outputs.current-version }}
+          tag_name: ${{ steps.package-version.outputs.current-version }}
+          body_path: ./RELEASE_NOTE${{ steps.package-version.outputs.current-version }}.md
