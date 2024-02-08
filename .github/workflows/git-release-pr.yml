@@ -5,7 +5,7 @@ on:
     types: [closed]
 
 jobs:
-  git-release-pr:
+  git-staging-pr:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
@@ -29,21 +29,12 @@ jobs:
           bundler-cache: true
 
       - name: Create a release pull request
-      - id: git-pr-release
         env:
           GIT_PR_RELEASE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GIT_PR_RELEASE_BRANCH_PRODUCTION: staging
           GIT_PR_RELEASE_BRANCH_STAGING: develop
           GIT_PR_RELEASE_LABELS: Release
-          GIT_PR_RELEASE_TEMPLATE: .github/.git-release-template
+          GIT_PR_RELEASE_TEMPLATE: .github/.git-staging-template
         run: |
           gem install -N git-pr-release
-          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "error<<$EOF" >> $GITHUB_OUTPUT
-          git-pr-release --no-fetch 2>> $GITHUB_OUTPUT || true
-          echo "$EOF" >> $GITHUB_OUTPUT
-        continue-on-error: true
-      - if: ${{ steps.git-pr-release.outputs.error != '' && !contains(steps.git-pr-release.outputs.error, 'No pull requests to be released') }}
-        run: |
-          echo '::error ::git-pr-release failed with "${{ steps.git-pr-release.outputs.error }}"'
-          exit 1
+          git-pr-release
