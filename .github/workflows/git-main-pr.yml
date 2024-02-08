@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
 
       - name: Create main branch
-        run: git checkout main 2>/dev/null || git branch -b main develop && git push -u origin/main
+        run: git checkout main 2>/dev/null || git branch -f main develop && git push -u origin/main
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
