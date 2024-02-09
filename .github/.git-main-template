@@ -1,6 +1,6 @@
 Production Release
 
-<% filterd_pr = pull_requests.filter{ |pr| !pr.mention.include?("[Bot]") }-%>
+<% filterd_pr = pull_requests.filter{ |pr| !pr.mention.include?("[bot]") }-%>
 
 <% filterd_pr.each do |pr| -%>
 - #<%=  pr.pr.number %> <%= pr.mention %>
