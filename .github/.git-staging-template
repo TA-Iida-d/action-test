@@ -1,4 +1,4 @@
-Staging Release
+Staging Release <%= ENV['RUN_NUMBER'] %>
 
 <% filterd_pr = pull_requests.filter{ |pr| !pr.mention.include?("[bot]") }-%>
 
