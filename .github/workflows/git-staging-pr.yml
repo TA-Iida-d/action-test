@@ -24,6 +24,8 @@ jobs:
           bundler-cache: true
 
       - name: Search Staging Release pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh pr list
 
       - name: Create a release pull request
