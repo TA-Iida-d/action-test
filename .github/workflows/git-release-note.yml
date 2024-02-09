@@ -1,38 +1,36 @@
+name: Create Release Note
+
 on:
   pull_request:
+    # PRが閉じたタイミングで実行
+    types:
+      - closed
+    # mainブランチのみを対象とする
     branches:
       - main
-    types: [closed]
+
+permissions:
+  contents: read
 
 jobs:
-  git-release-note:
-    if: github.event.pull_request.merged == true
+  release:
+    permissions:
+      # write permission is required to create a github release
+      contents: write
+      # リリースノートを書くためwrite用のpermissionを付与
+      pull-requests: write
+    if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'release')
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Get Version From package.json
-        id: package-version
-        uses: martinbeentjes/npm-get-version-action@master
-
-      - name: Create Change Log
+      - name: Create Release Tag And Note
         env:
-          GITHUB_AUTH: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          # Get PrevTag From git
-          PREV_TAG=$(git describe -abbrev=0)
-          LATEST_TAG=v${{ steps.package-version.outputs.current-version }}
-
-          npx lerna-changelog -from=$PREV_TAG > ./RELEASE_NOTE$LATEST_TAG.md
-          cat ./RELEASE_NOTE$LATEST_TAG.md
-
-      - name: Create Release note
-        uses: softprops/action-gh-release@v1
+          # このトークンは自動生成されるのでsecretsを登録する必要ない
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # PRのタイトルと内容をRelease内容に追加する
+          RELEASE_TAG: ${{ github.event.pull_request.title }}
+        uses: release-drafter/release-drafter@v5
         with:
-          name: Release ${{ steps.package-version.outputs.current-version }}
-          tag_name: ${{ steps.package-version.outputs.current-version }}
-          body_path: ./RELEASE_NOTE${{ steps.package-version.outputs.current-version }}.md
+          tag: ${{ env.RELEASE_TAG }}
+          name: Release ${{ env.RELEASE_TAG }}
+          version: ${{ env.RELEASE_TAG }}
+          publish: true
