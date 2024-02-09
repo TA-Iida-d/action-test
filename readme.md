@@ -7,3 +7,9 @@ Allow GitHub Actions to create and approve pull requests
 
 unChecked
 - Settings -> General -> Pull Requests -- Automatically delete head branches
+
+required branch
+
+- develop (default)
+- main
+- staging
