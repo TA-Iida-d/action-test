@@ -23,6 +23,9 @@ jobs:
           ruby-version: '3.3'
           bundler-cache: true
 
+      - name: Search Staging Release pr
+        run: gh pr list
+
       - name: Create a release pull request
         env:
           GIT_PR_RELEASE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
