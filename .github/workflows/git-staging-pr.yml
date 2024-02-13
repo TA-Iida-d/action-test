@@ -20,7 +20,7 @@ jobs:
       - name: List closed staging release
         id: closed-staging-release
         run: |
-          echo "length=$(gh pr list -L 1000 -S "is:pr is:closed FOO BAR BAZ" | wc -l)" >> $GITHUB_OUTPUT
+          echo "length=$(gh pr list -L 1000 -S "is:pr is:closed Staging Release" | wc -l)" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
