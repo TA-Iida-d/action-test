@@ -1,5 +1,4 @@
 {
-    "version": "0.0.0",
     "scripts": {
         "test": "BRANCH_NAME=\"$(od -vAn -N4 -tu4 < /dev/random | sed 's/^ *\\| *$//')\" && git checkout develop && git pull && git checkout -b $BRANCH_NAME && git commit --allow-empty -m \"empty commit\" && git push --set-upstream origin $BRANCH_NAME && git checkout develop"
     }
