@@ -21,7 +21,8 @@ jobs:
       - name: Set current version
         id: git-tag
         run: |
-          echo "current=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
+          $current=$(git describe --tags --abbrev=0)
+          echo "current=${current:-v0.0.0}" >> $GITHUB_OUTPUT
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
