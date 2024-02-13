@@ -19,7 +19,7 @@ jobs:
 
       - name: List PRs
         run: |
-          gh pr list
+          gh pr list -L 1000 -S "is:pr is:closed Staging Release"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
