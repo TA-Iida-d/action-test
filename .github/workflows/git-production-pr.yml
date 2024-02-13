@@ -36,7 +36,7 @@ jobs:
           GIT_PR_RELEASE_BRANCH_STAGING: staging
           GIT_PR_RELEASE_LABELS: Release
           GIT_PR_RELEASE_TEMPLATE: .github/pr-templates/.git-production-template.erb
-          VERSION: ${{ git-tag.current }}
+          VERSION: ${{ steps.git-tag.outputs.current }}
         run: |
           gem install -N git-pr-release
           git-pr-release
