@@ -12,6 +12,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Search Staging Release pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr list -l 1000 -S "is:closed Staging Release"
+        # run: gh pr list -l 1000 -S "is:closed Staging Release" | wc -l
+
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
@@ -22,12 +28,6 @@ jobs:
         with:
           ruby-version: '3.3'
           bundler-cache: true
-
-      - name: Search Staging Release pr
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: echo $(gh pr list -l 1000 -S "is:closed Staging Release")
-        # run: gh pr list -l 1000 -S "is:closed Staging Release" | wc -l
 
       - name: Create a release pull request
         env:
