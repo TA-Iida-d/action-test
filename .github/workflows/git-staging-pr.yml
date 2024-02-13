@@ -17,9 +17,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: List PRs
+      - name: List closed staging release
+        id: closed-staging-release
         run: |
-          gh pr list -L 1000 -S "is:pr is:closed Staging Release"
+          echo "length=$(gh pr list -L 1000 -S "is:pr is:closed Staging Release" | wc -l)" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -36,7 +37,7 @@ jobs:
           GIT_PR_RELEASE_BRANCH_STAGING: develop
           GIT_PR_RELEASE_LABELS: Release
           GIT_PR_RELEASE_TEMPLATE: .github/.git-staging-template
-          RUN_NUMBER: ${{ github.run_number }}
+          CLOSED_STAGING_RELEASE_LENGTH: ${{ steps.closed-staging-release.outputs.length }}
         run: |
           gem install -N git-pr-release
           git-pr-release
