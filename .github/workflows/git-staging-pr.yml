@@ -26,7 +26,10 @@ jobs:
       - name: Search Staging Release pr
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh pr list --repo ${{ github.repository }} -l 1000 -S "is:closed Staging Release"
+        run: |
+          gh pr list --repo ${{ github.repository }} -l 1000 -S "is:closed Staging Release"
+          gh pr list --repo ${{ github.repository }} -l 1000 -S "is:closed Staging Release" | wc -l
+          echo "list"
 
       - name: Create a release pull request
         env:
