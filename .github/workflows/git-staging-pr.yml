@@ -19,10 +19,10 @@ jobs:
 
       - name: List PRs
         run: |
-          gh auth login --with-token <<< "${{ secrets.GH_TOKEN }}"
+          gh auth login --with-token <<< "${{ secrets.GITHUB_TOKEN }}"
           gh pr list
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
