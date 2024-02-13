@@ -37,7 +37,7 @@ jobs:
           GIT_PR_RELEASE_BRANCH_PRODUCTION: staging
           GIT_PR_RELEASE_BRANCH_STAGING: develop
           GIT_PR_RELEASE_LABELS: Release
-          GIT_PR_RELEASE_TEMPLATE: .github/pr-templates/.git-staging-template
+          GIT_PR_RELEASE_TEMPLATE: .github/pr-templates/.git-staging-template.erb
           CLOSED_STAGING_RELEASE_LENGTH: ${{ steps.closed-staging-release.outputs.length }}
         run: |
           gem install -N git-pr-release
