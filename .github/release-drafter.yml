@@ -2,56 +2,26 @@ name-template: 'v$RESOLVED_VERSION 🌈'
 tag-template: 'v$RESOLVED_VERSION'
 
 categories:
-  - title: '🚀 Features'
+  - title: '新機能 :sparkles:'
     labels:
-      - 'enhancement'
-  - title: '🐛 Bug Fixes'
+      - ':sparkles: 機能リクエスト'
+  - title: 'バグ修正 :bug:'
     labels:
-      - 'bug'
-      - 'emergency'
-  - title: '🔧 Refactoring'
-    label: 'refactor'
-  - title: '📖 Documentation'
-    label: 'documentation'
-  - title: '✅ Tests'
-    label: 'test'
+      - ':bug: バグ'
+  - title: 'リファクタリング :art:'
+    label:
+      - ':art: リファクタリング'
+  - title: 'ドキュメント修正 :memo:'
+    label:
+      - ':memo: ドキュメント'
+  - title: 'その他'
+    label:
+      - '*'
 
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
 
 change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
 
-version-resolver:
-  major:
-    labels:
-      - 'major'
-  minor:
-    labels:
-      - 'minor'
-  patch:
-    labels:
-      - 'patch'
-  default: patch
-
 template: |
   ## Changes
   $CHANGES
-
-autolabeler:
-  - label: enhancement
-    branch:
-      - '/^feat(ure)?[/-].+/'
-  - label: bug
-    branch:
-      - '/^fix[/-].+/'
-  - label: emergency
-    branch:
-      - '/^hotfix[/-].+/'
-  - label: test
-    branch:
-      - '/^test[/-].+/'
-  - label: refactor
-    branch:
-      - '/^refactor[/-].+/'
-  - label: documentation
-    branch:
-      - '/^doc[/-].+/'

@@ -2,10 +2,8 @@ name: Create Release Note
 
 on:
   pull_request:
-    # PRが閉じたタイミングで実行
     types:
       - closed
-    # mainブランチのみを対象とする
     branches:
       - main
 
@@ -14,12 +12,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get npm Version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
+
       - name: Create Release Tag And Note
         env:
-          # このトークンは自動生成されるのでsecretsを登録する必要ない
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # PRのタイトルと内容をRelease内容に追加する
-          RELEASE_TAG: test
+          RELEASE_TAG: v${{ steps.package-version.outputs.current-version }}
         uses: release-drafter/release-drafter@v5
         with:
           tag: ${{ env.RELEASE_TAG }}
