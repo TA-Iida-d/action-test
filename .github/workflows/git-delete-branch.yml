@@ -1,4 +1,4 @@
-name: "Delete Merged Main Branches"
+name: Delete Merged Main Branches
 
 on:
   push:
