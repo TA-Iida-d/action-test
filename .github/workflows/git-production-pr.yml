@@ -24,6 +24,10 @@ jobs:
           export VERSION=$(git describe --tags --abbrev=0)
           echo "current=${VERSION:-v0.0.0}" >> $GITHUB_OUTPUT
 
+      - name: Get Version From package.json
+        id: package
+        uses: martinbeentjes/npm-get-version-action@master
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -37,7 +41,7 @@ jobs:
           GIT_PR_RELEASE_BRANCH_STAGING: staging
           GIT_PR_RELEASE_LABELS: Release
           GIT_PR_RELEASE_TEMPLATE: .github/pr-templates/.git-production-template.erb
-          VERSION: ${{ steps.git-tag.outputs.current }}
+          VERSION: v${{ steps.package-version.outputs.current-version}}
         run: |
           gem install -N git-pr-release
           git-pr-release
