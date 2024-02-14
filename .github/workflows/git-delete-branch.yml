@@ -1,8 +1,7 @@
 name: "Delete Merged Main Branches"
+
 on:
   push:
-    branches:
-      - develop
     types:
       - closed
 
