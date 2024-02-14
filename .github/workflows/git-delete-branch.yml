@@ -1,7 +1,7 @@
 name: Delete Merged Main Branches
 
 on:
-  push:
+  pull_request:
     branches:
       - main
       - master
