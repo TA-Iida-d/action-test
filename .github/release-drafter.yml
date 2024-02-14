@@ -1,5 +1,5 @@
-name-template: 'v$RESOLVED_VERSION 🌈'
-tag-template: 'v$RESOLVED_VERSION'
+name-template: $RESOLVED_VERSION
+tag-template: $RESOLVED_VERSION
 
 categories:
   - title: '新機能 :sparkles:'
@@ -18,13 +18,45 @@ categories:
     label:
       - '*'
 
+exclude-contributors:
+  - Release
+
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
 
 change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
 
-exclude-labels:
-  - 'Release'
+version-resolver:
+  major:
+    labels:
+      - major
+  minor:
+    labels:
+      - minor
+  patch:
+    labels:
+      - patch
+  default: patch
 
 template: |
   ## Changes
   $CHANGES
+
+autolabeler:
+  - label: enhancement
+    branch:
+      - '/^feat(ure)?[/-].+/'
+  - label: bug
+    branch:
+      - '/^fix[/-].+/'
+  - label: emergency
+    branch:
+      - '/^hotfix[/-].+/'
+  - label: test
+    branch:
+      - '/^test[/-].+/'
+  - label: refactor
+    branch:
+      - '/^refactor[/-].+/'
+  - label: documentation
+    branch:
+      - '/^doc[/-].+/'
